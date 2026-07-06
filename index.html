@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="映像制作のためのシネマトグラフィー用語辞典。ショットサイズ、アングル、カメラムーブ、レンズ、時間、照明、構図の7軸66用語を絵コンテで解説。">
+  <meta name="theme-color" content="#0b0c0e">
+  <title>CINEMATOGRAPHY REFERENCE — 7軸66用語</title>
+  <style>
+    :root {
+      --ink: #f1ede4;
+      --muted: #a4a19a;
+      --faint: #71716f;
+      --bg: #090a0c;
+      --panel: #111317;
+      --panel-2: #171a1f;
+      --line: rgba(255,255,255,.11);
+      --line-strong: rgba(255,255,255,.2);
+      --amber: #e6aa58;
+      --teal: #73b9b4;
+      --max: 1480px;
+      --serif: "Iowan Old Style", "YuMincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
+      --sans: Inter, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 118px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 76% -10%, rgba(230,170,88,.10), transparent 30rem),
+        radial-gradient(circle at -10% 40%, rgba(115,185,180,.06), transparent 28rem),
+        var(--bg);
+      font-family: var(--sans);
+      line-height: 1.65;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+      opacity: .075;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+    }
+    a { color: inherit; }
+    button, input { font: inherit; }
+
+    .hero {
+      min-height: 74vh;
+      display: grid;
+      align-items: end;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 7% 4%;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 2px;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, transparent 33.2%, rgba(255,255,255,.045) 33.3%, transparent 33.5%, transparent 66.5%, rgba(255,255,255,.045) 66.7%, transparent 66.8%),
+        linear-gradient(transparent 33.2%, rgba(255,255,255,.045) 33.3%, transparent 33.5%, transparent 66.5%, rgba(255,255,255,.045) 66.7%, transparent 66.8%);
+    }
+    .hero-inner {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+      padding: 100px 0 72px;
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0 0 24px;
+      color: var(--amber);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 48px; height: 1px; background: currentColor; }
+    h1 {
+      max-width: 1100px;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(54px, 9vw, 138px);
+      font-weight: 400;
+      line-height: .82;
+      letter-spacing: -.055em;
+    }
+    h1 span { display: block; margin-left: .55em; color: transparent; -webkit-text-stroke: 1px rgba(241,237,228,.62); }
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 40px;
+      margin-top: 54px;
+    }
+    .lead { max-width: 700px; margin: 0; color: #c7c3bb; font-family: var(--serif); font-size: clamp(16px, 1.5vw, 22px); }
+    .stats { display: flex; gap: 34px; }
+    .stat strong { display: block; color: var(--amber); font-family: var(--serif); font-size: 34px; font-weight: 400; line-height: 1; }
+    .stat span { color: var(--faint); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(9,10,12,.88);
+      backdrop-filter: blur(18px);
+    }
+    .toolbar-inner {
+      width: min(var(--max), calc(100% - 48px));
+      margin: auto;
+      padding: 14px 0;
+      display: grid;
+      grid-template-columns: minmax(210px, 300px) minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+    }
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.025);
+    }
+    .search svg { width: 15px; color: var(--faint); }
+    .search input { width: 100%; border: 0; outline: 0; color: var(--ink); background: transparent; font-size: 12px; }
+    .search input::placeholder { color: var(--faint); }
+    .filters { display: flex; gap: 7px; overflow-x: auto; scrollbar-width: none; }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .filter:hover { color: var(--ink); border-color: var(--line); }
+    .filter[aria-pressed="true"] { color: #101114; background: var(--amber); }
+
+    main { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+    .axis-section { padding: 100px 0 22px; }
+    .axis-head {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) minmax(260px, 430px);
+      gap: 30px;
+      align-items: end;
+      margin-bottom: 34px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line-strong);
+    }
+    .axis-no { color: var(--amber); font-family: var(--serif); font-size: 18px; }
+    .axis-title { margin: 0; font-family: var(--serif); font-size: clamp(34px, 4vw, 66px); font-weight: 400; letter-spacing: -.035em; line-height: .95; }
+    .axis-title small { display: block; margin-top: 10px; color: var(--muted); font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .18em; }
+    .axis-desc { margin: 0; color: var(--muted); font-size: 13px; }
+    .term-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+
+    .term-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255,255,255,.034), rgba(255,255,255,.014));
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .term-card:hover { transform: translateY(-3px); border-color: rgba(230,170,88,.4); background: rgba(255,255,255,.045); }
+    .storyboard {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #e8e6df;
+      border-bottom: 1px solid var(--line);
+    }
+    .storyboard::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 80px rgba(0,0,0,.12); pointer-events: none; }
+    .storyboard img { width: 100%; height: 100%; display: block; object-fit: cover; filter: sepia(.06) contrast(1.03); transition: transform .5s ease; }
+    .term-card:hover .storyboard img { transform: scale(1.015); }
+    .card-body { padding: 24px 24px 22px; }
+    .card-kicker { display: flex; justify-content: space-between; gap: 18px; align-items: baseline; color: var(--faint); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+    .term-count { color: var(--amber); }
+    .term-name { margin: 7px 0 4px; font-family: var(--serif); font-size: clamp(24px, 2.4vw, 36px); font-weight: 400; line-height: 1.08; letter-spacing: -.025em; }
+    .term-ja { margin: 0 0 22px; color: var(--teal); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+    .detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+    .detail { min-width: 0; padding: 17px 16px 0 0; }
+    .detail + .detail { padding-left: 16px; border-left: 1px solid var(--line); }
+    .detail-label { display: block; margin-bottom: 8px; color: var(--amber); font-size: 9px; font-weight: 800; letter-spacing: .14em; }
+    .detail p { margin: 0; color: #bebbb4; font-size: 12px; line-height: 1.65; }
+
+    .empty { display: none; padding: 110px 0; text-align: center; color: var(--muted); }
+    .empty strong { display: block; color: var(--ink); font-family: var(--serif); font-size: 28px; font-weight: 400; }
+    .page-foot {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 100px auto 0;
+      padding: 30px 0 48px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--faint);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .top-link { text-decoration: none; }
+    mark { color: inherit; background: rgba(230,170,88,.32); }
+    [hidden] { display: none !important; }
+
+    @media (max-width: 980px) {
+      .hero { min-height: 66vh; }
+      .hero-bottom, .axis-head { grid-template-columns: 1fr; }
+      .stats { justify-content: flex-start; }
+      .toolbar-inner { grid-template-columns: 1fr; gap: 8px; }
+      .axis-head { gap: 10px; }
+      .axis-no { margin-bottom: 10px; }
+      .term-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px) {
+      html { scroll-padding-top: 145px; }
+      .hero-inner, .toolbar-inner, main, .page-foot { width: min(100% - 28px, var(--max)); }
+      .hero-inner { padding: 70px 0 50px; }
+      h1 { font-size: clamp(46px, 16.5vw, 76px); line-height: .88; }
+      h1 span { margin-left: .2em; }
+      .hero-bottom { margin-top: 38px; gap: 28px; }
+      .stats { gap: 24px; }
+      .axis-section { padding-top: 72px; }
+      .card-body { padding: 19px 17px 18px; }
+      .detail-grid { grid-template-columns: 1fr; }
+      .detail { padding: 14px 0; }
+      .detail + .detail { padding-left: 0; border-top: 1px solid var(--line); border-left: 0; }
+      .detail-label { margin-bottom: 4px; }
+      .page-foot { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Visual language for filmmakers</p>
+      <h1>CINEMATOGRAPHY <span>REFERENCE</span></h1>
+      <div class="hero-bottom">
+        <p class="lead">映像制作のためのシネマトグラフィー用語辞典。ショットサイズから構図まで、画づくりの語彙を7つの軸と絵コンテで読み解く。</p>
+        <div class="stats" aria-label="収録内容">
+          <div class="stat"><strong>7</strong><span>visual axes</span></div>
+          <div class="stat"><strong>66</strong><span>film terms</span></div>
+          <div class="stat"><strong>16:9</strong><span>storyboards</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="toolbar" aria-label="用語の検索と絞り込み">
+    <div class="toolbar-inner">
+      <label class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="m21 21-4.5-4.5m2.5-5A7.5 7.5 0 1 1 4 11.5a7.5 7.5 0 0 1 15 0Z"/></svg>
+        <input id="search" type="search" placeholder="用語・効果・使い所を検索" autocomplete="off">
+      </label>
+      <div class="filters" id="filters" aria-label="7軸フィルター"></div>
+    </div>
+  </nav>
+
+  <main id="content"></main>
+  <div class="empty" id="empty"><strong>該当する用語がありません</strong>別のキーワードや軸を試してください。</div>
+
+  <footer class="page-foot">
+    <span>Cinematography Reference / 7 axes · 66 terms</span>
+    <a class="top-link" href="#top">Back to top ↑</a>
+  </footer>
+
+  <script>
+    const axes = [
+      { id: "shot-size", no: "01", name: "SHOT SIZE", ja: "ショットサイズ", desc: "被写体をどこまで画面に入れるか。観客と人物の心理的な距離、情報量、身体性を設計する軸。" },
+      { id: "angle", no: "02", name: "ANGLE", ja: "アングル", desc: "カメラをどの高さ・方向に置くか。同じ人物でも、力関係や客観性、没入感を大きく変える。" },
+      { id: "camera-movement", no: "03", name: "CAMERA MOVEMENT", ja: "カメラムーブ", desc: "カメラの移動で視線と時間を導く。静けさ、臨場感、疾走感、心理変化を身体的に伝える。" },
+      { id: "lens-optics", no: "04", name: "LENS & OPTICS", ja: "レンズ・光学", desc: "画角、圧縮、被写界深度、光学現象を選ぶ。空間の見え方と映像の手触りを決める軸。" },
+      { id: "time-speed", no: "05", name: "TIME & SPEED", ja: "時間・速度", desc: "映像内の時間を伸縮・反転・固定する。出来事の重み、リズム、体感時間をコントロールする。" },
+      { id: "lighting", no: "06", name: "LIGHTING", ja: "ライティング", desc: "光の方向、硬さ、色、量を設計する。時間帯と空気感を示し、人物の感情や物語の温度をつくる。" },
+      { id: "composition", no: "07", name: "COMPOSITION", ja: "構図", desc: "画面内の形、線、余白、レイヤーを配置する。視線を誘導し、関係性と意味を一枚に定着させる。" }
+    ];
+
+    const terms = [
+      ["shot-size","ECU / Extreme Close-Up","超クローズアップ","目・唇など顔の一部","感情の極致、緊張、親密さ","涙、決意の瞬間、鍵となる小物","SHOT SIZE_ECU_Extreme Close-Up.png"],
+      ["shot-size","CU / Close-Up","クローズアップ","顔全体","感情表現の主役","セリフ、リアクション","SHOT SIZE_CU_Close-Up.png"],
+      ["shot-size","MCU / Medium Close-Up","バストショット","胸から上","自然な対話の距離感","会話、インタビュー","SHOT SIZE_MCU_Medium Close-Up.png"],
+      ["shot-size","MS / Medium Shot","ミディアムショット","腰から上","表情と動作の両立","日常芝居、掛け合い","SHOT SIZE_MS_Medium Shot.png"],
+      ["shot-size","Cowboy Shot","カウボーイショット","膝上","構え・佇まいの強調","対峙シーン、ファッション","SHOT SIZE_Cowboy Shot.png"],
+      ["shot-size","FS / Full Shot","フルショット","全身","動き・衣装を見せる","ダンス、アクション","SHOT SIZE_FS_Full Shot.png"],
+      ["shot-size","WS / Extreme Long Shot","ワイド・大ロング","人物より環境が主","状況説明、孤独感、スケール","Establishing shot、冒頭・結末","SHOT SIZE_WS_Extreme Long Shot.png"],
+
+      ["angle","Eye Level","アイレベル","目線の高さ","中立、共感、フラット","会話、日常の基本","ANGLE_Eye Level.png"],
+      ["angle","Low Angle","ローアングル","見上げる","威圧感、強さ、カッコよさ","ヒーロー登場、権力者","ANGLE_Low Angle.png"],
+      ["angle","High Angle","ハイアングル","見下ろす","弱さ、孤独、客観性","追い詰められた人物","ANGLE_High Angle.png"],
+      ["angle","Bird's Eye / Top-down","真俯瞰","真上から","神視点、図形的な美","食事、群衆、幕開け・幕引き","ANGLE_Bird's Eye_Top-down.png"],
+      ["angle","Worm's Eye","虫の目線","地面すれすれから見上げ","圧倒的スケール、非日常","ビル群、巨大感の演出","ANGLE_Worm's Eye.png"],
+      ["angle","POV","主観ショット","登場人物の視点","没入、一体感","ホラー、恋愛の目線、体験型","ANGLE_POV.png"],
+      ["angle","OTS / Over-the-Shoulder","肩越し","肩越しに相手を捉える","会話の関係性、距離感","対話、対峙シーン","ANGLE_OTS_Over-the-Shoulder.png"],
+      ["angle","Dutch Angle","傾き構図","水平を傾ける","不安、狂気、非日常","サスペンス、精神的動揺","ANGLE_Dutch Angle.png"],
+
+      ["camera-movement","Static / Locked-off","完全固定","三脚固定・不動","安定、観察者視点、構図美","会話、シンメトリー構図","CAMERA MOVEMENT_Static_Locked-off.png"],
+      ["camera-movement","Pan","パン","左右に首振り","空間の提示、視線の移動","風景紹介、動きを追う","CAMERA MOVEMENT_Pan.png"],
+      ["camera-movement","Tilt","ティルト","上下に首振り","高さ・大きさの強調","建物の見上げ、全身紹介","CAMERA MOVEMENT_Tilt.png"],
+      ["camera-movement","Whip Pan","ホイップパン","ブレるほどの高速パン","スピード感、勢い","シーン間トランジション","CAMERA MOVEMENT_Whip Pan.png"],
+      ["camera-movement","Dolly In / Out","ドリー","カメラ自体が前進・後退","没入（In）／余韻・孤立（Out）","感情の山場、シーンの締め","CAMERA MOVEMENT_Dolly In_Out.png"],
+      ["camera-movement","Tracking Shot","トラッキング","被写体と並走・追従","臨場感、「旅」の感覚","歩き・走り・移動シーン","CAMERA MOVEMENT_Tracking Shot.png"],
+      ["camera-movement","Orbit / Arc Shot","オービット","被写体の周囲を旋回","ヒーロー感、感情のピーク","見せ場、MVのサビ、決意","CAMERA MOVEMENT_Orbit_Arc Shot.png"],
+      ["camera-movement","Crane / Jib Shot","クレーン","上下に大きく昇降","スケール感、視点の転換","OP / ED、街の提示","CAMERA MOVEMENT_Crane_Jib Shot.png"],
+      ["camera-movement","Steadicam","ステディカム","揺れのない滑らかな追従","浮遊感、夢のような没入","長回し、建物内の移動","CAMERA MOVEMENT_Steadicam.png"],
+      ["camera-movement","Handheld","手持ち","手持ちの細かい揺れ","生々しさ、緊張、ドキュメンタリー感","緊迫シーン、リアルな日常、Vlog風","CAMERA MOVEMENT_Handheld.png"],
+      ["camera-movement","Aerial / Drone","空撮","上空からの俯瞰移動","スケール、状況説明","ロケーション提示、冒頭の掴み","CAMERA MOVEMENT_Aerial_Drone.png"],
+      ["camera-movement","FPV Drone","FPVドローン","高速で空間をすり抜け","疾走感、圧倒的ダイナミズム","アクション、空間紹介、場面転換","CAMERA MOVEMENT_FPV Drone.png"],
+      ["camera-movement","Zoom In / Out","ズーム","レンズで拡大縮小（カメラ固定）","平面的な注視、TV・レトロ感","情報への注目、レトロ演出","CAMERA MOVEMENT_Zoom In_Out.png"],
+      ["camera-movement","Dolly Zoom / Hitchcock Zoom","ドリーズーム","前進しながらズームアウト（逆も）","背景だけが歪む強烈な違和感、心理的衝撃","真実に気づく瞬間、恐怖・眩暈","CAMERA MOVEMENT_Dolly Zoom_Hitchcock Zoom.png"],
+      ["camera-movement","Crash Zoom","クラッシュズーム","急激な高速ズーム","衝撃、強調、コメディ","ギャグ、驚きのリアクション","CAMERA MOVEMENT_Crash Zoom.png"],
+
+      ["lens-optics","Wide Angle (14–35mm)","広角","画角が広い・歪み","空間の広がり、迫力","狭い室内、風景","LENS & OPTICS_Wide Angle 14–35mm.png"],
+      ["lens-optics","Standard (50mm)","標準","肉眼に近い画角","自然、誠実、記録的","日常、ドキュメンタリー","LENS & OPTICS_Standard 50mm.png"],
+      ["lens-optics","Telephoto (85mm–)","望遠","圧縮効果","覗き見感、密度、距離の圧縮","都会の雑踏、遠距離の緊張","LENS & OPTICS_Telephoto 85mm–.png"],
+      ["lens-optics","Anamorphic","アナモルフィック","横長フレア・楕円ボケ","「映画ルック」の記号","シネマ風全般","LENS & OPTICS_Anamorphic.png"],
+      ["lens-optics","Fisheye","魚眼","極端な歪曲","遊び、異化、90s感","スケート系、コミカル","LENS & OPTICS_Fisheye.png"],
+      ["lens-optics","Macro","マクロ","超接写","質感、ミクロの世界","雫、目、ディテール","LENS & OPTICS_Macro.png"],
+      ["lens-optics","Shallow DOF / Bokeh","浅い被写界深度","背景ボケ","被写体の分離、映画感","感情シーン、ポートレート","LENS & OPTICS_Shallow DOF_Bokeh.png"],
+      ["lens-optics","Deep Focus","パンフォーカス","全域にピント","情報量、奥行きの芝居","群像、背景に意味がある画","LENS & OPTICS_Deep Focus.png"],
+      ["lens-optics","Rack Focus","ピント送り","ピントを別の被写体へ移す","視線誘導、意味の転換","前景→背景の切替、会話","LENS & OPTICS_Rack Focus.png"],
+      ["lens-optics","Lens Flare","レンズフレア","光条・ゴースト","光の存在感、エモさ","逆光シーン、青春感","LENS & OPTICS_Lens Flare.png"],
+
+      ["time-speed","Slow Motion","スローモーション","高速撮影→遅く再生","感情の引き延ばし、美","決定的瞬間、髪・水の動き","TIME & SPEED_Slow Motion.png"],
+      ["time-speed","Speed Ramp","スピードランプ","速度の緩急切替","キレ、リズム","アクション、MVのキメ","TIME & SPEED_Speed Ramp.png"],
+      ["time-speed","Time-lapse","タイムラプス","定点の早送り","時間経過の圧縮","雲、夕暮れ、街","TIME & SPEED_Time-lapse.png"],
+      ["time-speed","Hyperlapse","ハイパーラプス","移動＋早送り","ダイナミックな時間経過","都市、旅の移動","TIME & SPEED_Hyperlapse.png"],
+      ["time-speed","Reverse","逆再生","時間を巻き戻す","違和感、マジック感","トリック演出、回想への導入","TIME & SPEED_Reverse.png"],
+      ["time-speed","Freeze Frame","フリーズフレーム","静止","強調、余韻","キャラ紹介、ラストカット","TIME & SPEED_Freeze Frame.png"],
+      ["time-speed","Long Take / Oner","長回し","カットせず長時間撮影","没入、緊張の持続","ワンカット風演出","TIME & SPEED_Long Take_Oner.png"],
+
+      ["lighting","Golden Hour","ゴールデンアワー","日の出・日没前後の暖色光","エモーショナル、映画的","恋愛、回想、エモ系MV","LIGHTING_Golden Hour.png"],
+      ["lighting","Blue Hour","ブルーアワー","日没後・夜明け前の青","静けさ、切なさ","別れ、余韻、独白","LIGHTING_Blue Hour.png"],
+      ["lighting","Backlight / Rim Light","逆光・輪郭光","被写体の背後から","ドラマチック、輪郭の分離","ヒーローショット、髪の光","LIGHTING_Backlight_Rim Light.png"],
+      ["lighting","Silhouette","シルエット","被写体を黒く落とす","匿名性、詩的、抽象化","OP、感情の象徴表現","LIGHTING_Silhouette.png"],
+      ["lighting","High Key","ハイキー","明るく影が少ない","清潔、幸福、広告的","CM、コメディ、日常","LIGHTING_High Key.png"],
+      ["lighting","Low Key","ローキー","暗部主体・高コントラスト","緊張、ミステリー","サスペンス、ノワール","LIGHTING_Low Key.png"],
+      ["lighting","Soft Light","柔らかい光","拡散光・影が淡い","優しさ、美肌、癒し","ポートレート、恋愛","LIGHTING_Soft Light.png"],
+      ["lighting","Hard Light","硬い光","直射光・濃い影","力強さ、ドラマ、対比","真昼の緊張、ノワール","LIGHTING_Hard Light.png"],
+      ["lighting","Practical Light","プラクティカル","画面内の光源（ランプ等）","リアリティ、生活感","夜の室内、バー","LIGHTING_Practical Light.png"],
+      ["lighting","Neon Light","ネオン","ネオン・LEDの色光","都会的、近未来","夜の街、サイバー系","LIGHTING_Neon Light.png"],
+      ["lighting","Volumetric / God Rays","光芒","光の筋が見える","神秘、荘厳","森、窓からの光、教会","LIGHTING_Volumetric_God Rays.png"],
+      ["lighting","Firelight / Candlelight","炎の光","揺らめく暖色光源","温もり、親密さ","キャンプ、和室の夜","LIGHTING_Firelight_Candlelight.png"],
+
+      ["composition","Rule of Thirds","三分割法","交点・線上に主題","バランス、自然な安定","万能の基本形","COMPOSITION_Rule of Thirds.png"],
+      ["composition","Center / Symmetry","日の丸・左右対称","中央配置・対称","荘厳、様式美、強い意志","対称構図、対峙","COMPOSITION_Center_Symmetry.png"],
+      ["composition","Leading Lines","誘導線","線で視線を主題へ導く","奥行き、導かれる感覚","道路、廊下、線路","COMPOSITION_Leading Lines.png"],
+      ["composition","Frame within Frame","額縁構図","窓・ドア越しに切り取る","閉塞感、覗き見、隔たり","心理描写、二人の距離感","COMPOSITION_Frame within Frame.png"],
+      ["composition","Negative Space","余白","大胆に空間を空ける","孤独、余韻、静寂","感情の間、ミニマル表現","COMPOSITION_Negative Space.png"],
+      ["composition","Foreground Layers","前ボケ・多層構図","前景／中景／背景の3層","立体感、映画的奥行き","覗き見構図、没入感","COMPOSITION_Foreground Layers.png"],
+      ["composition","Headroom / Lead Room","空間の取り方","頭上・視線の先の余白","安定（守る）／不安（崩す）","会話、移動ショット","COMPOSITION_Headroom_Lead Room.png"]
+    ].map(([axis, name, ja, operation, effect, use, file]) => ({ axis, name, ja, operation, effect, use, file }));
+
+    const content = document.querySelector("#content");
+    const filters = document.querySelector("#filters");
+    const search = document.querySelector("#search");
+    const empty = document.querySelector("#empty");
+    let selectedAxis = "all";
+
+    const escapeHtml = value => value.replace(/[&<>"']/g, char => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    })[char]);
+
+    function renderFilters() {
+      const choices = [{ id: "all", name: "ALL · 66" }, ...axes.map(axis => ({
+        id: axis.id,
+        name: `${axis.name} · ${terms.filter(term => term.axis === axis.id).length}`
+      }))];
+      filters.innerHTML = choices.map(choice =>
+        `<button class="filter" type="button" data-axis="${choice.id}" aria-pressed="${choice.id === selectedAxis}">${choice.name}</button>`
+      ).join("");
+    }
+
+    function render() {
+      const query = search.value.trim().toLocaleLowerCase("ja");
+      let shown = 0;
+      content.innerHTML = axes.map(axis => {
+        if (selectedAxis !== "all" && selectedAxis !== axis.id) return "";
+        const axisTerms = terms.filter(term => {
+          if (term.axis !== axis.id) return false;
+          const haystack = [term.name, term.ja, term.operation, term.effect, term.use].join(" ").toLocaleLowerCase("ja");
+          return !query || haystack.includes(query);
+        });
+        if (!axisTerms.length) return "";
+        shown += axisTerms.length;
+        return `
+          <section class="axis-section" id="${axis.id}">
+            <header class="axis-head">
+              <div class="axis-no">AXIS ${axis.no}</div>
+              <h2 class="axis-title">${axis.name}<small>${axis.ja} · ${axisTerms.length} TERMS</small></h2>
+              <p class="axis-desc">${axis.desc}</p>
+            </header>
+            <div class="term-grid">
+              ${axisTerms.map((term, index) => `
+                <article class="term-card" id="${axis.id}-${index + 1}">
+                  <div class="storyboard">
+                    <img src="${encodeURI(`assets/storyboards/${term.file}`)}" alt="${escapeHtml(term.name)}の視覚効果を説明する絵コンテ" loading="lazy" decoding="async">
+                  </div>
+                  <div class="card-body">
+                    <div class="card-kicker"><span>${axis.name}</span><span class="term-count">${String(index + 1).padStart(2, "0")} / ${String(axisTerms.length).padStart(2, "0")}</span></div>
+                    <h3 class="term-name">${escapeHtml(term.name)}</h3>
+                    <p class="term-ja">${escapeHtml(term.ja)}</p>
+                    <div class="detail-grid">
+                      <div class="detail"><span class="detail-label">操作 / TRAIT</span><p>${escapeHtml(term.operation)}</p></div>
+                      <div class="detail"><span class="detail-label">効果・印象 / EFFECT</span><p>${escapeHtml(term.effect)}</p></div>
+                      <div class="detail"><span class="detail-label">使い所 / USE</span><p>${escapeHtml(term.use)}</p></div>
+                    </div>
+                  </div>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+        `;
+      }).join("");
+      empty.style.display = shown ? "none" : "block";
+    }
+
+    filters.addEventListener("click", event => {
+      const button = event.target.closest("button[data-axis]");
+      if (!button) return;
+      selectedAxis = button.dataset.axis;
+      renderFilters();
+      render();
+      document.querySelector(".toolbar").scrollIntoView({ behavior: "smooth" });
+    });
+    search.addEventListener("input", render);
+
+    renderFilters();
+    render();
+    if (location.hash) {
+      document.querySelector(location.hash)?.scrollIntoView();
+    }
+  </script>
+</body>
+</html>
