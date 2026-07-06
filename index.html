@@ -27,6 +27,7 @@
     html { scroll-behavior: smooth; scroll-padding-top: 118px; }
     body {
       margin: 0;
+      overflow-x: hidden;
       color: var(--ink);
       background:
         radial-gradient(circle at 76% -10%, rgba(230,170,88,.10), transparent 30rem),
@@ -54,11 +55,30 @@
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid var(--line);
+      background: #080b0b;
+    }
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: .72;
+      filter: saturate(.72) contrast(1.12);
+    }
+    .hero-shade {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(3,5,6,.88) 0%, rgba(3,5,6,.38) 55%, rgba(3,5,6,.2) 100%),
+        linear-gradient(0deg, rgba(3,5,6,.95) 0%, rgba(3,5,6,.12) 62%, rgba(3,5,6,.5) 100%);
     }
     .hero::after {
       content: "";
       position: absolute;
       inset: 7% 4%;
+      z-index: 1;
       border: 1px solid rgba(255,255,255,.08);
       border-radius: 2px;
       pointer-events: none;
@@ -71,7 +91,7 @@
       margin: 0 auto;
       padding: 100px 0 72px;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
     .eyebrow {
       display: flex;
@@ -106,6 +126,27 @@
     .stats { display: flex; gap: 34px; }
     .stat strong { display: block; color: var(--amber); font-family: var(--serif); font-size: 34px; font-weight: 400; line-height: 1; }
     .stat span { color: var(--faint); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+    .video-toggle {
+      position: absolute;
+      top: 34px;
+      right: 4%;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255,255,255,.22);
+      color: var(--ink);
+      background: rgba(7,9,10,.42);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .video-toggle::before { content: "Ⅱ"; color: var(--amber); }
+    .video-toggle[aria-pressed="true"]::before { content: "▶"; }
 
     .toolbar {
       position: sticky;
@@ -168,7 +209,7 @@
     .axis-title { margin: 0; font-family: var(--serif); font-size: clamp(34px, 4vw, 66px); font-weight: 400; letter-spacing: -.035em; line-height: .95; }
     .axis-title small { display: block; margin-top: 10px; color: var(--muted); font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .18em; }
     .axis-desc { margin: 0; color: var(--muted); font-size: 13px; }
-    .term-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .term-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 
     .term-card {
       min-width: 0;
@@ -176,8 +217,11 @@
       border: 1px solid var(--line);
       background: linear-gradient(145deg, rgba(255,255,255,.034), rgba(255,255,255,.014));
       transition: transform .25s ease, border-color .25s ease, background .25s ease;
+      cursor: zoom-in;
+      outline: none;
     }
     .term-card:hover { transform: translateY(-3px); border-color: rgba(230,170,88,.4); background: rgba(255,255,255,.045); }
+    .term-card:focus-visible { border-color: var(--amber); box-shadow: 0 0 0 2px rgba(230,170,88,.3); }
     .storyboard {
       position: relative;
       aspect-ratio: 16 / 9;
@@ -193,11 +237,62 @@
     .term-count { color: var(--amber); }
     .term-name { margin: 7px 0 4px; font-family: var(--serif); font-size: clamp(24px, 2.4vw, 36px); font-weight: 400; line-height: 1.08; letter-spacing: -.025em; }
     .term-ja { margin: 0 0 22px; color: var(--teal); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
-    .detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+    .detail-grid { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--line); }
     .detail { min-width: 0; padding: 17px 16px 0 0; }
-    .detail + .detail { padding-left: 16px; border-left: 1px solid var(--line); }
+    .detail + .detail { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
     .detail-label { display: block; margin-bottom: 8px; color: var(--amber); font-size: 9px; font-weight: 800; letter-spacing: .14em; }
     .detail p { margin: 0; color: #bebbb4; font-size: 12px; line-height: 1.65; }
+    .view-label {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--faint);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .view-label span:last-child { color: var(--amber); }
+
+    .term-dialog {
+      width: min(1180px, calc(100% - 36px));
+      max-height: calc(100dvh - 36px);
+      padding: 0;
+      overflow: auto;
+      border: 1px solid rgba(255,255,255,.2);
+      color: var(--ink);
+      background: #101216;
+      box-shadow: 0 30px 100px rgba(0,0,0,.75);
+    }
+    .term-dialog::backdrop { background: rgba(2,3,4,.84); backdrop-filter: blur(10px); }
+    .dialog-close {
+      position: sticky;
+      top: 14px;
+      float: right;
+      z-index: 3;
+      width: 42px;
+      height: 42px;
+      margin: 14px 14px -56px 0;
+      border: 1px solid rgba(255,255,255,.3);
+      color: var(--ink);
+      background: rgba(7,8,10,.74);
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .dialog-layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(360px, .7fr); min-height: 620px; }
+    .dialog-image { min-height: 100%; background: #e7e5de; }
+    .dialog-image img { width: 100%; height: 100%; display: block; object-fit: contain; }
+    .dialog-copy { display: flex; flex-direction: column; justify-content: center; padding: 64px 46px 48px; }
+    .dialog-axis { margin: 0 0 14px; color: var(--amber); font-size: 10px; font-weight: 800; letter-spacing: .16em; }
+    .dialog-title { margin: 0; font-family: var(--serif); font-size: clamp(34px, 4vw, 58px); font-weight: 400; line-height: 1; letter-spacing: -.035em; }
+    .dialog-ja { margin: 12px 0 34px; color: var(--teal); font-size: 13px; font-weight: 700; letter-spacing: .08em; }
+    .dialog-details { border-top: 1px solid var(--line); }
+    .dialog-detail { padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .dialog-detail span { display: block; margin-bottom: 5px; color: var(--amber); font-size: 9px; font-weight: 800; letter-spacing: .14em; }
+    .dialog-detail p { margin: 0; color: #cfccc5; font-size: 14px; line-height: 1.7; }
 
     .empty { display: none; padding: 110px 0; text-align: center; color: var(--muted); }
     .empty strong { display: block; color: var(--ink); font-family: var(--serif); font-size: 28px; font-weight: 400; }
@@ -225,32 +320,43 @@
       .toolbar-inner { grid-template-columns: 1fr; gap: 8px; }
       .axis-head { gap: 10px; }
       .axis-no { margin-bottom: 10px; }
-      .term-grid { grid-template-columns: 1fr; }
+      .term-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .dialog-layout { grid-template-columns: 1fr; }
+      .dialog-image { min-height: auto; }
+      .dialog-copy { padding: 36px 26px 32px; }
     }
-    @media (max-width: 620px) {
+    @media (max-width: 680px) {
       html { scroll-padding-top: 145px; }
       .hero-inner, .toolbar-inner, main, .page-foot { width: min(100% - 28px, var(--max)); }
       .hero-inner { padding: 70px 0 50px; }
-      h1 { font-size: clamp(46px, 16.5vw, 76px); line-height: .88; }
+      h1 { font-size: clamp(34px, 10.4vw, 52px); line-height: .9; letter-spacing: -.075em; }
       h1 span { margin-left: .2em; }
       .hero-bottom { margin-top: 38px; gap: 28px; }
       .stats { gap: 24px; }
       .axis-section { padding-top: 72px; }
+      .term-grid { grid-template-columns: 1fr; }
       .card-body { padding: 19px 17px 18px; }
-      .detail-grid { grid-template-columns: 1fr; }
       .detail { padding: 14px 0; }
-      .detail + .detail { padding-left: 0; border-top: 1px solid var(--line); border-left: 0; }
       .detail-label { margin-bottom: 4px; }
+      .term-dialog { width: calc(100% - 18px); max-height: calc(100dvh - 18px); }
+      .dialog-close { top: 8px; margin: 8px 8px -50px 0; }
       .page-foot { flex-direction: column; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition-duration: .01ms !important; }
+      .hero-media { display: none; }
+      .video-toggle { display: none; }
     }
   </style>
 </head>
 <body id="top">
   <header class="hero">
+    <video class="hero-media" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="assets/media/hero-poster.jpg" aria-hidden="true">
+      <source src="assets/media/hero-film.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <button class="video-toggle" id="videoToggle" type="button" aria-pressed="false" aria-label="背景動画を一時停止">Pause film</button>
     <div class="hero-inner">
       <p class="eyebrow">Visual language for filmmakers</p>
       <h1>CINEMATOGRAPHY <span>REFERENCE</span></h1>
@@ -277,6 +383,23 @@
 
   <main id="content"></main>
   <div class="empty" id="empty"><strong>該当する用語がありません</strong>別のキーワードや軸を試してください。</div>
+
+  <dialog class="term-dialog" id="termDialog" aria-labelledby="dialogTitle">
+    <button class="dialog-close" id="dialogClose" type="button" aria-label="詳細を閉じる">×</button>
+    <div class="dialog-layout">
+      <div class="dialog-image"><img id="dialogImage" src="" alt=""></div>
+      <div class="dialog-copy">
+        <p class="dialog-axis" id="dialogAxis"></p>
+        <h2 class="dialog-title" id="dialogTitle"></h2>
+        <p class="dialog-ja" id="dialogJa"></p>
+        <div class="dialog-details">
+          <div class="dialog-detail"><span>操作 / TRAIT</span><p id="dialogOperation"></p></div>
+          <div class="dialog-detail"><span>効果・印象 / EFFECT</span><p id="dialogEffect"></p></div>
+          <div class="dialog-detail"><span>使い所 / USE</span><p id="dialogUse"></p></div>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
   <footer class="page-foot">
     <span>Cinematography Reference / 7 axes · 66 terms</span>
@@ -373,7 +496,13 @@
     const filters = document.querySelector("#filters");
     const search = document.querySelector("#search");
     const empty = document.querySelector("#empty");
+    const termDialog = document.querySelector("#termDialog");
+    const dialogClose = document.querySelector("#dialogClose");
+    const heroVideo = document.querySelector("#heroVideo");
+    const videoToggle = document.querySelector("#videoToggle");
     let selectedAxis = "all";
+
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) heroVideo.pause();
 
     const escapeHtml = value => value.replace(/[&<>"']/g, char => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
@@ -410,7 +539,7 @@
             </header>
             <div class="term-grid">
               ${axisTerms.map((term, index) => `
-                <article class="term-card" id="${axis.id}-${index + 1}">
+                <article class="term-card" id="${axis.id}-${index + 1}" data-term="${terms.indexOf(term)}" role="button" tabindex="0" aria-haspopup="dialog" aria-label="${escapeHtml(term.name)}の詳細を開く">
                   <div class="storyboard">
                     <img src="${encodeURI(`assets/storyboards/${term.file}`)}" alt="${escapeHtml(term.name)}の視覚効果を説明する絵コンテ" loading="lazy" decoding="async">
                   </div>
@@ -423,6 +552,7 @@
                       <div class="detail"><span class="detail-label">効果・印象 / EFFECT</span><p>${escapeHtml(term.effect)}</p></div>
                       <div class="detail"><span class="detail-label">使い所 / USE</span><p>${escapeHtml(term.use)}</p></div>
                     </div>
+                    <div class="view-label"><span>Full reference</span><span>Open ↗</span></div>
                   </div>
                 </article>
               `).join("")}
@@ -432,6 +562,53 @@
       }).join("");
       empty.style.display = shown ? "none" : "block";
     }
+
+    function openTerm(index) {
+      const term = terms[index];
+      const axis = axes.find(item => item.id === term.axis);
+      document.querySelector("#dialogAxis").textContent = `${axis.name} / ${axis.ja}`;
+      document.querySelector("#dialogTitle").textContent = term.name;
+      document.querySelector("#dialogJa").textContent = term.ja;
+      document.querySelector("#dialogOperation").textContent = term.operation;
+      document.querySelector("#dialogEffect").textContent = term.effect;
+      document.querySelector("#dialogUse").textContent = term.use;
+      const image = document.querySelector("#dialogImage");
+      image.src = encodeURI(`assets/storyboards/${term.file}`);
+      image.alt = `${term.name}の視覚効果を説明する絵コンテ`;
+      termDialog.showModal();
+    }
+
+    content.addEventListener("click", event => {
+      const card = event.target.closest(".term-card");
+      if (card) openTerm(Number(card.dataset.term));
+    });
+    content.addEventListener("keydown", event => {
+      const card = event.target.closest(".term-card");
+      if (card && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        openTerm(Number(card.dataset.term));
+      }
+    });
+    dialogClose.addEventListener("click", () => termDialog.close());
+    termDialog.addEventListener("click", event => {
+      const rect = termDialog.getBoundingClientRect();
+      const outside = event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+      if (outside) termDialog.close();
+    });
+
+    videoToggle.addEventListener("click", () => {
+      if (heroVideo.paused) {
+        heroVideo.play();
+        videoToggle.textContent = "Pause film";
+        videoToggle.setAttribute("aria-pressed", "false");
+        videoToggle.setAttribute("aria-label", "背景動画を一時停止");
+      } else {
+        heroVideo.pause();
+        videoToggle.textContent = "Play film";
+        videoToggle.setAttribute("aria-pressed", "true");
+        videoToggle.setAttribute("aria-label", "背景動画を再生");
+      }
+    });
 
     filters.addEventListener("click", event => {
       const button = event.target.closest("button[data-axis]");
